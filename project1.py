@@ -1,4 +1,5 @@
 from pathlib import Path
+from simulation import Simulation
 
 
 def _read_input_file_path() -> Path:
@@ -26,11 +27,12 @@ def getLineCommand(line:str) -> str:
     LENGTH, DEVICE, ALERT, PROPAGATE, CANCEL"""
     return line.split()[0]
 
-def parseLine(line:str) -> bool:
+def parseLine(line:str, sim: Simulation) -> bool:
     """Reads a line of input and parses it based on its command type"""
     command = getLineCommand(line)
     if command == 'LENGTH':
-        pass
+        length = int(line.split()[1])
+        sim.setLength(length)
     elif command == 'DEVICE':
         pass
     elif command == 'ALERT':
@@ -46,10 +48,11 @@ def main() -> None:
     """Runs the simulation program in its entirety"""
     input_file_path = _read_input_file_path()
     inputLines = readFileLines(input_file_path)
+    sim = Simulation()
 
     for line in inputLines:
         if (not isLineBlank(line)) and (not isLineComment(line)) :
-            parseLine(line)
+            parseLine(line, sim)
 
 
 if __name__ == '__main__':
