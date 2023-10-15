@@ -1,6 +1,6 @@
 from pathlib import Path
 from simulation import Simulation
-from device import Device
+from device import Device, Propagation
 
 
 def _read_input_file_path() -> Path:
@@ -42,8 +42,14 @@ def parseLine(line:str, sim: Simulation) -> bool:
 
     elif command == 'ALERT':
         pass
+
     elif command == 'PROPAGATE':
-        pass
+        senderDeviceID = int(line.split()[1])
+        receiverDeviceID = int(line.split()[2])
+        delay = int(line.split()[3])
+        propagation = Propagation(senderDeviceID,receiverDeviceID,delay)
+        sim.getDeviceByID(senderDeviceID).addPropagation(propagation)
+
     elif command == 'CANCEL':
         pass
 
