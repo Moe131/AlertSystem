@@ -12,6 +12,10 @@ class Propagation:
          identify propagation with test cases"""
         return f'{self.senderDeviceID} {self.receiverDeviceID} {self._delay}'
 
+    def getDelay(self) -> int:
+        """Returns the delay of the propagation"""
+        return self._delay
+
 class Device:
     """Represents a device in our simulation that has unique ID,
      a propagation list and a list of cancelled alerts"""
