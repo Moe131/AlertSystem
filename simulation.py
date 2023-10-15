@@ -24,8 +24,9 @@ class Simulation:
     def getDevices(self) -> list:
         """Returns a list of devices in the simulation"""
         return self._devices
+
     def getDeviceByID(self,ID:int)-> Device:
         """Searches for a device in simulation base on the ID and returns it """
         for device in self.getDevices():
             if device.getID() == ID:
-                return Device
+                return device
