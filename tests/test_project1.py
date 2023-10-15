@@ -11,6 +11,10 @@ class project1Test(unittest.TestCase):
         with open(self._path, 'r', encoding = 'utf-8') as the_file:
             self.assertEqual(project1.readFileLines(self._path), the_file.readlines())
 
+    def test_input_line_is_a_comment(self):
+        line = '# ICS 33 Fall 2023'
+        self.assertEqual(project1.isLineComment(line), True)
+
     # This can not be tested since the function requires user input from terminal
     #
     #def test_correct_input_file_path_is_returned(self):

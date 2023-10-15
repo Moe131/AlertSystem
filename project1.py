@@ -10,10 +10,19 @@ def readFileLines(path:Path, encoding = 'utf-8') -> list:
     with open(path, 'r', encoding = encoding) as the_file:
         return the_file.readlines()
 
+def isLineComment(line:str) -> bool:
+    """Checks if an input line is a comment"""
+    if line.startswith('#'):
+        return True
+    return False
+
 def main() -> None:
     """Runs the simulation program in its entirety"""
     input_file_path = _read_input_file_path()
     inputLines = readFileLines(input_file_path)
+
+    for line in inputLines:
+        pass
 
 
 if __name__ == '__main__':
