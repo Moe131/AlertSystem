@@ -30,6 +30,12 @@ class project1Test(unittest.TestCase):
         project1.parseLine(line, sim)
         self.assertEqual(sim.getLength() ,9999)
 
+    def test_DEVICE_line_is_parsed(self):
+        line = "DEVICE 1"
+        sim = Simulation()
+        project1.parseLine(line,sim)
+        self.assertEqual(sim.getDevices()[0].getID(), 1)
+
     # This can not be tested since the function requires user input from terminal
     #
     #def test_correct_input_file_path_is_returned(self):

@@ -1,5 +1,6 @@
 from pathlib import Path
 from simulation import Simulation
+from device import Device
 
 
 def _read_input_file_path() -> Path:
@@ -33,8 +34,12 @@ def parseLine(line:str, sim: Simulation) -> bool:
     if command == 'LENGTH':
         length = int(line.split()[1])
         sim.setLength(length)
+
     elif command == 'DEVICE':
-        pass
+        ID = int(line.split()[1])
+        device = Device(ID)
+        sim.addDevice(device)
+
     elif command == 'ALERT':
         pass
     elif command == 'PROPAGATE':
