@@ -23,6 +23,9 @@ class project1Test(unittest.TestCase):
         line = "LENGTH 9999"
         self.assertEqual(project1.getLineCommand(line),'LENGTH')
 
+    def test_input_line_is_parsed_when_it_is_a_command(self):
+        line = "PROPAGATE 1 2 750"
+        self.assertTrue(project1.parseLine(line))
 
     # This can not be tested since the function requires user input from terminal
     #

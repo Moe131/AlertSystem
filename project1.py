@@ -26,6 +26,21 @@ def getLineCommand(line:str) -> str:
     LENGTH, DEVICE, ALERT, PROPAGATE, CANCEL"""
     return line.split()[0]
 
+def parseLine(line:str) -> bool:
+    """Reads a line of input and parses it based on its command type"""
+    command = getLineCommand(line)
+    if command == 'LENGTH':
+        pass
+    elif command == 'DEVICE':
+        pass
+    elif command == 'ALERT':
+        pass
+    elif command == 'PROPAGATE':
+        pass
+    elif command == 'CANCEL':
+        pass
+
+    return True
 
 def main() -> None:
     """Runs the simulation program in its entirety"""
@@ -34,7 +49,7 @@ def main() -> None:
 
     for line in inputLines:
         if (not isLineBlank(line)) and (not isLineComment(line)) :
-            command = getLineCommand(line)
+            parseLine(line)
 
 
 if __name__ == '__main__':
