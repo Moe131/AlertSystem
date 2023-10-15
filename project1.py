@@ -20,6 +20,13 @@ def isLineBlank(line:str) -> bool:
     """Check if an input line is a blank line"""
     return line.isspace()
 
+def getLineCommand(line:str) -> str:
+    """Reads an input line and returns its command type as a string.
+    Five command types are defined in our program:
+    LENGTH, DEVICE, ALERT, PROPAGATE, CANCEL"""
+    return line.split()[0]
+
+
 def main() -> None:
     """Runs the simulation program in its entirety"""
     input_file_path = _read_input_file_path()
@@ -27,7 +34,7 @@ def main() -> None:
 
     for line in inputLines:
         if (not isLineBlank(line)) and (not isLineComment(line)) :
-            pass
+            command = getLineCommand(line)
 
 
 if __name__ == '__main__':
