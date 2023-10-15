@@ -16,13 +16,18 @@ def isLineComment(line:str) -> bool:
         return True
     return False
 
+def isLineBlank(line:str) -> bool:
+    """Check if an input line is a blank line"""
+    return line.isspace()
+
 def main() -> None:
     """Runs the simulation program in its entirety"""
     input_file_path = _read_input_file_path()
     inputLines = readFileLines(input_file_path)
 
     for line in inputLines:
-        pass
+        if (not isLineBlank(line)) and (not isLineComment(line)) :
+            pass
 
 
 if __name__ == '__main__':

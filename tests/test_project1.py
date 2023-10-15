@@ -15,6 +15,10 @@ class project1Test(unittest.TestCase):
         line = '# ICS 33 Fall 2023'
         self.assertEqual(project1.isLineComment(line), True)
 
+    def test_input_line_is_blank(self):
+        line = "   "
+        self.assertEqual(project1.isLineBlank(line), True)
+
     # This can not be tested since the function requires user input from terminal
     #
     #def test_correct_input_file_path_is_returned(self):
