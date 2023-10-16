@@ -20,6 +20,5 @@ class simulationTest(unittest.TestCase):
         self._sim.addDevice(device)
         self.assertEqual(self._sim.getDeviceByID(2),device)
 
-
 if __name__ == '__main__':
     unittest.main()

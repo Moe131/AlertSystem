@@ -39,6 +39,14 @@ class Simulation:
          to the simulation. When an alert is propagated, two events are added,
          one type 'SENT' and one type 'RECEIVED' """
         device = self.getDeviceByID(senderDeviceID)
+
+        for cancelAlert in device.getCancelAlertList():
+            if cancelAlert.getDescription() == alert.getDescription():
+                return
+
+        if alert.isCancel():
+            device.addCancelAlert(alert)
+
         for propagation in device.getPropagationList():
             receiverDeviceID = propagation.getReceiverID()
             event1 = Event(time,senderDeviceID,receiverDeviceID, alert, 'SENT')
@@ -49,3 +57,24 @@ class Simulation:
     def getEvents(self) -> list:
         """Returns a list of events in the simulation"""
         return self._events
+
+    def getEventsInString(self) -> list:
+        theList = []
+        for event in self.getEvents():
+            theList.append(event.toString()+"\n")
+        theList.append(f'@{self._length}: END\n')
+        return theList
+    def run(self)-> None:
+        """Runs the simulation by executing the list of events which is sorted by time"""
+        eventIndex = 0
+        while eventIndex < len(self._events):
+            currentEvent = self._events[eventIndex]
+            if currentEvent.getType() == "RECEIVED":
+                time = currentEvent.getTime()
+                newEventsSender = currentEvent.getReceiverID()
+                alert = currentEvent.getAlert()
+                self.addEvents(time,newEventsSender,alert)
+                self._events = sorted(self._events, key = lambda event: event.getTime())
+
+            eventIndex += 1
+

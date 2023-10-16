@@ -68,6 +68,18 @@ class project1Test(unittest.TestCase):
         project1.parseLine(line, sim)
         self.assertEqual(sim.getEvents()[0].toString() ,"@2200: #1 SENT CANCELLATION TO #2: Trouble")
 
+    def test_simulation_runs_events(self):
+        inputLines = project1.readFileLines(self._path)
+        outputLines = project1.readFileLines('../samples/sample_output.txt')
+
+        sim = Simulation()
+        for line in inputLines:
+            if (not project1.isLineBlank(line)) and (not project1.isLineComment(line)):
+                project1.parseLine(line, sim)
+        sim.run()
+        self.assertEqual(sim.getEventsInString() ,outputLines)
+
+
     # This can not be tested since the function requires user input from terminal
     #
     #def test_correct_input_file_path_is_returned(self):
