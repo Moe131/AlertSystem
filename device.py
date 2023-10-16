@@ -1,3 +1,5 @@
+from alert import Alert
+
 class Propagation:
     """Represents a propagation and contains
      senderDeviceID, receiverDeviceID, and delay"""
@@ -28,6 +30,7 @@ class Device:
         """Initializes Device object with a unique ID attribute"""
         self._ID = ID
         self._propagationList = []
+        self._cancelAlertList = []
 
     def getID(self) -> int:
         """Returns the ID of the device"""
@@ -40,3 +43,11 @@ class Device:
     def getPropagationList(self) -> list:
         """Returns the list of device propagations"""
         return self._propagationList
+
+    def addCancelAlert(self, alert:Alert) -> None:
+        """Adds a cancellation alert request to the device """
+        self._cancelAlertList.append(alert)
+
+    def getCancelAlertList(self) -> list:
+        """Returns a list of cancel alert request for the device"""
+        return self._cancelAlertList
