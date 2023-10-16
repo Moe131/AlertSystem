@@ -26,5 +26,11 @@ class eventTest(unittest.TestCase):
         event = Event(0, 1, 2, Alert("Trouble", True), 'RECEIVED')
         self.assertEqual(event.toString(), "@0: #2 RECEIVED CANCELLATION FROM #1: Trouble")
 
+    def test_event_sender_ID_is_returned(self):
+        self.assertEqual(self._event.getSenderID(),1)
+
+    def test_event_receiver_ID_is_returned(self):
+        self.assertEqual(self._event.getReceiverID(), 2)
+
 if __name__ == '__main__':
     unittest.main()

@@ -22,6 +22,14 @@ class Event:
         """Returns the type of the event"""
         return self._type
 
+    def getSenderID(self) -> int:
+        """Returns the ID of sender device"""
+        return self._senderDeviceID
+
+    def getReceiverID(self) -> int:
+        """Returns the ID of receiver device"""
+        return self._receiverDeviceID
+
     def toString(self) -> str:
         """Converts the event to a string format and returns it"""
         if self._type == 'SENT' and not self._alert.isCancel():
