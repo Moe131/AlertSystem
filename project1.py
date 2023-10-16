@@ -56,7 +56,11 @@ def parseLine(line:str, sim: Simulation) -> bool:
         sim.getDeviceByID(senderDeviceID).addPropagation(propagation)
 
     elif command == 'CANCEL':
-        pass
+        senderDeviceID = int(line.split()[1])
+        description = line.split()[2]
+        time = int(line.split()[3])
+        alert = Alert(description, True)
+        sim.addEvents(time, senderDeviceID, alert)
 
     return True
 

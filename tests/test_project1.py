@@ -56,6 +56,18 @@ class project1Test(unittest.TestCase):
         project1.parseLine(line,sim)
         self.assertEqual(sim.getEvents()[0].toString(), "@0: #1 SENT ALERT TO #2: Trouble" )
 
+    def test_CANCEL_line_is_parsed(self):
+        sim = Simulation()
+        line = "DEVICE 1"
+        project1.parseLine(line, sim)
+        line = "DEVICE 2"
+        project1.parseLine(line, sim)
+        line = "PROPAGATE 1 2 750"
+        project1.parseLine(line, sim)
+        line = "CANCEL 1 Trouble 2200"
+        project1.parseLine(line, sim)
+        self.assertEqual(sim.getEvents()[0].toString() ,"@2200: #1 SENT CANCELLATION TO #2: Trouble")
+
     # This can not be tested since the function requires user input from terminal
     #
     #def test_correct_input_file_path_is_returned(self):

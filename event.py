@@ -24,9 +24,18 @@ class Event:
 
     def toString(self) -> str:
         """Converts the event to a string format and returns it"""
-        if self._type is 'SENT':
+        if self._type == 'SENT' and not self._alert.isCancel():
             return (f'@{self._time}: #{self._senderDeviceID} SENT'
                     f' ALERT TO #{self._receiverDeviceID}: {self._alert.getDescription()}')
-        elif self._type is 'RECEIVED':
+
+        elif self._type == 'SENT' and self._alert.isCancel():
+            return (f'@{self._time}: #{self._senderDeviceID} SENT'
+                    f' CANCELLATION TO #{self._receiverDeviceID}: {self._alert.getDescription()}')
+
+        elif self._type == 'RECEIVED' and self._alert.isCancel():
             return (f'@{self._time}: #{self._receiverDeviceID} RECEIVED'
                     f' CANCELLATION FROM #{self._senderDeviceID}: {self._alert.getDescription()}')
+
+        elif self._type == 'RECEIVED' and not self._alert.isCancel():
+            return (f'@{self._time}: #{self._receiverDeviceID} RECEIVED'
+                    f' ALERT FROM #{self._senderDeviceID}: {self._alert.getDescription()}')
