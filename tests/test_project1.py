@@ -46,6 +46,8 @@ class project1Test(unittest.TestCase):
 
     def test_ALERT_line_is_parsed(self):
         sim = Simulation()
+        line = "LENGTH 9999"
+        project1.parseLine(line, sim)
         line = "DEVICE 1"
         project1.parseLine(line, sim)
         line = "DEVICE 2"
@@ -58,6 +60,8 @@ class project1Test(unittest.TestCase):
 
     def test_CANCEL_line_is_parsed(self):
         sim = Simulation()
+        line = "LENGTH 9999"
+        project1.parseLine(line, sim)
         line = "DEVICE 1"
         project1.parseLine(line, sim)
         line = "DEVICE 2"
@@ -71,7 +75,6 @@ class project1Test(unittest.TestCase):
     def test_simulation_runs_events(self):
         inputLines = project1.readFileLines(self._path)
         outputLines = project1.readFileLines('../samples/sample_output.txt')
-
         sim = Simulation()
         for line in inputLines:
             if (not project1.isLineBlank(line)) and (not project1.isLineComment(line)):
@@ -79,6 +82,20 @@ class project1Test(unittest.TestCase):
         sim.run()
         self.assertEqual(sim.getEventsInString() ,outputLines)
 
+    def test_simulation_will_not_execute_events_passed_length(self):
+        sim = Simulation()
+        line = "LENGTH 500"
+        project1.parseLine(line, sim)
+        line = "DEVICE 1"
+        project1.parseLine(line, sim)
+        line = "DEVICE 2"
+        project1.parseLine(line, sim)
+        line = "PROPAGATE 1 2 750"
+        project1.parseLine(line, sim)
+        line = "ALERT 1 Trouble 100"
+        project1.parseLine(line, sim)
+        sim.run()
+        self.assertEqual(sim.getEventsInString(),['@100: #1 SENT ALERT TO #2: Trouble\n', '@500: END\n'])
 
     # This can not be tested since the function requires user input from terminal
     #

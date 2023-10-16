@@ -49,8 +49,12 @@ class Simulation:
 
         for propagation in device.getPropagationList():
             receiverDeviceID = propagation.getReceiverID()
+            if time >= self._length:
+                continue
             event1 = Event(time,senderDeviceID,receiverDeviceID, alert, 'SENT')
             self._events.append(event1)
+            if (time+propagation.getDelay()) >= self._length:
+                continue
             event2 = Event(time+propagation.getDelay(), senderDeviceID, receiverDeviceID, alert, 'RECEIVED')
             self._events.append(event2)
 
@@ -64,6 +68,7 @@ class Simulation:
             theList.append(event.toString()+"\n")
         theList.append(f'@{self._length}: END\n')
         return theList
+
     def run(self)-> None:
         """Runs the simulation by executing the list of events which is sorted by time"""
         eventIndex = 0
