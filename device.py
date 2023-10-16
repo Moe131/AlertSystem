@@ -3,18 +3,22 @@ class Propagation:
      senderDeviceID, receiverDeviceID, and delay"""
     def __init__(self, senderDeviceID:int , receiverDeviceID:int, delay:int ):
         """Initializes a propagation with the three attributes"""
-        self.senderDeviceID = senderDeviceID
-        self.receiverDeviceID = receiverDeviceID
+        self._senderDeviceID = senderDeviceID
+        self._receiverDeviceID = receiverDeviceID
         self._delay = delay
 
     def getPropagationString(self) -> str:
         """Returns the propagation attributes in a string to help
          identify propagation with test cases"""
-        return f'{self.senderDeviceID} {self.receiverDeviceID} {self._delay}'
+        return f'{self._senderDeviceID} {self._receiverDeviceID} {self._delay}'
 
     def getDelay(self) -> int:
         """Returns the delay of the propagation"""
         return self._delay
+
+    def getReceiverID(self) -> int:
+        """Returns the Receiver device ID"""
+        return self._receiverDeviceID
 
 class Device:
     """Represents a device in our simulation that has unique ID,
