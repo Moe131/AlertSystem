@@ -44,9 +44,6 @@ class Simulation:
             if cancelAlert.getDescription() == alert.getDescription():
                 return
 
-        if alert.isCancel():
-            device.addCancelAlert(alert)
-
         for propagation in device.getPropagationList():
             receiverDeviceID = propagation.getReceiverID()
             if time >= self._length:
@@ -58,16 +55,25 @@ class Simulation:
             event2 = Event(time+propagation.getDelay(), senderDeviceID, receiverDeviceID, alert, 'RECEIVED')
             self._events.append(event2)
 
+        self._events = sorted(self._events, key = lambda event: event.getTime())
+
     def getEvents(self) -> list:
         """Returns a list of events in the simulation"""
         return self._events
 
     def getEventsInString(self) -> list:
+        """Returns a list of string versions of the events, to help with tests cases """
         theList = []
         for event in self.getEvents():
             theList.append(event.toString()+"\n")
         theList.append(f'@{self._length}: END\n')
         return theList
+
+    def printResults(self) -> None :
+        """Prints the result of the simulation"""
+        for line in self.getEventsInString():
+            print(line, end='')
+
 
     def run(self)-> None:
         """Runs the simulation by executing the list of events which is sorted by time"""
@@ -79,7 +85,12 @@ class Simulation:
                 newEventsSender = currentEvent.getReceiverID()
                 alert = currentEvent.getAlert()
                 self.addEvents(time,newEventsSender,alert)
-                self._events = sorted(self._events, key = lambda event: event.getTime())
+
+            elif currentEvent.getType() == "SENT":
+                if currentEvent.getAlert().isCancel():
+                    device = self.getDeviceByID(currentEvent.getSenderID())
+                    device.addCancelAlert(currentEvent.getAlert())
 
             eventIndex += 1
+
 

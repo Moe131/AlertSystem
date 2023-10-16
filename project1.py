@@ -74,6 +74,8 @@ def main() -> None:
         if (not isLineBlank(line)) and (not isLineComment(line)) :
             parseLine(line, sim)
 
+    sim.run()
+    sim.printResults()
 
 if __name__ == '__main__':
     main()
