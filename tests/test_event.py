@@ -26,6 +26,10 @@ class eventTest(unittest.TestCase):
         event = Event(0, 1, 2, Alert("Trouble", True), 'RECEIVED')
         self.assertEqual(event.toString(), "@0: #2 RECEIVED CANCELLATION FROM #1: Trouble")
 
+    def test_event_toString_method_returns_None_when_event_has_wrong_format(self):
+        event = Event(0, 1, 2, Alert("Trouble", True), 'WRONG')
+        self.assertEqual(event.toString(), None)
+
     def test_event_sender_ID_is_returned(self):
         self.assertEqual(self._event.getSenderID(),1)
 
