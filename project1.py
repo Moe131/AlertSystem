@@ -93,5 +93,6 @@ def main() -> None:
     sim.run()
     sim.printResults()
 
+
 if __name__ == '__main__':
     main()
