@@ -1,6 +1,8 @@
-from pathlib import Path
 import unittest
 import project1
+import io
+import contextlib
+from pathlib import Path
 from simulation import Simulation
 
 class project1Test(unittest.TestCase):
@@ -82,7 +84,7 @@ class project1Test(unittest.TestCase):
         sim.run()
         self.assertEqual(sim.getEventsInString() ,outputLines)
 
-    def test_simulation_will_not_execute_events_passed_length(self):
+    def test_simulation_will_not_execute_propagated_events_passed_length(self):
         sim = Simulation()
         line = "LENGTH 500"
         project1.parseLine(line, sim)
@@ -96,6 +98,39 @@ class project1Test(unittest.TestCase):
         project1.parseLine(line, sim)
         sim.run()
         self.assertEqual(sim.getEventsInString(),['@100: #1 SENT ALERT TO #2: Trouble\n', '@500: END\n'])
+
+    def test_simulation_will_not_execute_events_passed_length(self):
+        sim = Simulation()
+        line = "LENGTH 500"
+        project1.parseLine(line, sim)
+        line = "DEVICE 1"
+        project1.parseLine(line, sim)
+        line = "DEVICE 2"
+        project1.parseLine(line, sim)
+        line = "PROPAGATE 1 2 750"
+        project1.parseLine(line, sim)
+        line = "ALERT 1 Trouble 600"
+        project1.parseLine(line, sim)
+        sim.run()
+        self.assertEqual(sim.getEventsInString(),['@500: END\n'])
+
+
+    def test_simulation_prints_events_list_correctly(self):
+        with contextlib.redirect_stdout(io.StringIO()) as output:
+            sim = Simulation()
+            line = "LENGTH 500"
+            project1.parseLine(line, sim)
+            line = "DEVICE 1"
+            project1.parseLine(line, sim)
+            line = "DEVICE 2"
+            project1.parseLine(line, sim)
+            line = "PROPAGATE 1 2 200"
+            project1.parseLine(line, sim)
+            line = "ALERT 1 Trouble 100"
+            project1.parseLine(line, sim)
+            sim.run()
+            sim.printResults()
+        self.assertEqual(output.getvalue(),'@100: #1 SENT ALERT TO #2: Trouble\n@300: #2 RECEIVED ALERT FROM #1: Trouble\n@500: END\n')
 
     # This can not be tested since the function requires user input from terminal
     #

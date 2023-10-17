@@ -4,6 +4,7 @@ from device import Device, Propagation
 from alert import Alert
 
 
+# This function can not be tested since it requires user input for terminal
 def _read_input_file_path() -> Path:
     """Reads the input file path from the standard input"""
     return Path(input())
@@ -64,6 +65,7 @@ def parseLine(line:str, sim: Simulation) -> bool:
 
     return True
 
+# This main() can not be tested since it requires user input in its implementation
 def main() -> None:
     """Runs the simulation program in its entirety"""
     input_file_path = _read_input_file_path()
