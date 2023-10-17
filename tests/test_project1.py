@@ -79,13 +79,10 @@ class project1Test(unittest.TestCase):
         sim = Simulation()
         self.assertFalse(project1.parseLine(line, sim))
 
-    def test_simulation_runs_events(self):
-        inputLines = project1.readFileLines(self._path)
+    def test_the_file_is_parsed_and_simulation_runs_correctly(self):
         outputLines = project1.readFileLines('../samples/sample_output.txt')
         sim = Simulation()
-        for line in inputLines:
-            if (not project1.isLineBlank(line)) and (not project1.isLineComment(line)):
-                project1.parseLine(line, sim)
+        project1.parseInputFile(self._path,sim)
         sim.run()
         self.assertEqual(sim.getEventsInString() ,outputLines)
 

@@ -9,10 +9,12 @@ def _read_input_file_path() -> Path:
     """Reads the input file path from the standard input"""
     return Path(input())
 
+
 def readFileLines(path:Path, encoding = 'utf-8') -> list:
     """Reads the lines of a file with given path and returns them as a list"""
     with open(path, 'r', encoding = encoding) as the_file:
         return the_file.readlines()
+
 
 def isLineComment(line:str) -> bool:
     """Checks if an input line is a comment"""
@@ -20,15 +22,18 @@ def isLineComment(line:str) -> bool:
         return True
     return False
 
+
 def isLineBlank(line:str) -> bool:
     """Check if an input line is a blank line"""
     return line.isspace()
+
 
 def getLineCommand(line:str) -> str:
     """Reads an input line and returns its command type as a string.
     Five command types are defined in our program:
     LENGTH, DEVICE, ALERT, PROPAGATE, CANCEL"""
     return line.split()[0]
+
 
 def parseLine(line:str, sim: Simulation) -> bool:
     """Reads a line of input and parses it based on its command type"""
@@ -66,7 +71,16 @@ def parseLine(line:str, sim: Simulation) -> bool:
         return False
     return True
 
-# This main() can not be tested since it requires user input in its implementation
+
+def parseInputFile(path: Path, sim: Simulation)-> None:
+    """Gets a file path and parses/executes each line of the input on the simulation"""
+    inputLines = readFileLines(path)
+    for line in inputLines:
+        if (not isLineBlank(line)) and (not isLineComment(line)) :
+            parseLine(line, sim)
+
+
+# The main() function can not be tested since it requires user input in its implementation
 def main() -> None:
     """Runs the simulation program in its entirety"""
     input_file_path = _read_input_file_path()
@@ -74,13 +88,8 @@ def main() -> None:
     if not input_file_path.is_file():
         print("FILE NOT FOUND")
         return
-    inputLines = readFileLines(input_file_path)
     sim = Simulation()
-
-    for line in inputLines:
-        if (not isLineBlank(line)) and (not isLineComment(line)) :
-            parseLine(line, sim)
-
+    parseInputFile(input_file_path, sim)
     sim.run()
     sim.printResults()
 
