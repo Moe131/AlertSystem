@@ -69,6 +69,10 @@ def parseLine(line:str, sim: Simulation) -> bool:
 def main() -> None:
     """Runs the simulation program in its entirety"""
     input_file_path = _read_input_file_path()
+    # The if statement below can not be tested since its inside main()
+    if not input_file_path.is_file():
+        print("FILE NOT FOUND")
+        return
     inputLines = readFileLines(input_file_path)
     sim = Simulation()
 
