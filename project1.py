@@ -62,7 +62,8 @@ def parseLine(line:str, sim: Simulation) -> bool:
         time = int(line.split()[3])
         alert = Alert(description, True)
         sim.addEvents(time, senderDeviceID, alert)
-
+    else:
+        return False
     return True
 
 # This main() can not be tested since it requires user input in its implementation

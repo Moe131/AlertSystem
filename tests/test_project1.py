@@ -74,6 +74,11 @@ class project1Test(unittest.TestCase):
         project1.parseLine(line, sim)
         self.assertEqual(sim.getEvents()[0].toString() ,"@2200: #1 SENT CANCELLATION TO #2: Trouble")
 
+    def test_parseLine_method_returns_False_when_line_has_wrong_format(self):
+        line = "WRONG FORMAT 1"
+        sim = Simulation()
+        self.assertFalse(project1.parseLine(line, sim))
+
     def test_simulation_runs_events(self):
         inputLines = project1.readFileLines(self._path)
         outputLines = project1.readFileLines('../samples/sample_output.txt')
